@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.houseoftroyy.mymasterje">
-   <application
+    <application
         android:label="mymasterje"
         android:icon="@mipmap/ic_launcher">
         <activity
