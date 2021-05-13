@@ -1,10 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mymasterje/screens/ChooseProfession.dart';
+import 'package:mymasterje/screens/Loading.dart';
 import 'package:mymasterje/screens/Splash.dart';
+import 'package:mymasterje/studentscreens/StudentForm.dart';
 import 'package:mymasterje/styles/themes.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
   runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {

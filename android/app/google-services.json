@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "75487760569",
+    "project_id": "mymasterje-b0ccd",
+    "storage_bucket": "mymasterje-b0ccd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:75487760569:android:3dcbf359f26a4257a70b68",
+        "android_client_info": {
+          "package_name": "com.houseoftroyy.mymasterje"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "75487760569-v7u2bpo09idhos0hq9mni5rvvj32jafv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.houseoftroyy.mymasterje",
+            "certificate_hash": "eefead4e3da650beeb939cb22d3cf882bb421dbc"
+          }
+        },
+        {
+          "client_id": "75487760569-l2bujgfj7627281a8bbjo24vtf6f7opi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBC_FvXNTuVxb7u2hZ9FqxXfe9UjIcxHeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "75487760569-l2bujgfj7627281a8bbjo24vtf6f7opi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mymasterje/utils/LoginBackground.dart';
+import 'package:mymasterje/screens/LoginScreen.dart';
 import 'package:mymasterje/widgets/WelcomeScreenCard.dart';
 import '../styles/common.dart';
 
@@ -26,7 +28,7 @@ class ChooseProfession extends StatelessWidget {
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(35), topLeft: Radius.circular(35)),
                  child: Container(
-                  color: Theme.of(context).primaryColorLight,
+                  color: Theme.of(context).splashColor,
                   height: screenSize(context).height * 0.70,
                   child: Padding(
                     padding: const EdgeInsets.all(18.0),
@@ -37,14 +39,26 @@ class ChooseProfession extends StatelessWidget {
                           Text("Are You A?",style: TextStyle(color: Colors.black,fontSize: 45),),
                           Row(
                             children: [
-                             WelcomeScreenCard(context,'assets/images/student.png', "Student"),
-                            WelcomeScreenCard(context, 'assets/images/parent.png', "Parent")
+                             WelcomeScreenCard(context,'assets/images/student.png', "Student",
+                                 (){
+                               Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                                 }),
+                            WelcomeScreenCard(context, 'assets/images/parent.png', "Parent",
+                                    (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                                })
                             ],
                           ),
                           Row(
                             children: [
-                             WelcomeScreenCard(context, "assets/images/teacher.png", "Teacher"),
-                             WelcomeScreenCard(context, "assets/images/admin.png", "Admin")
+                             WelcomeScreenCard(context, "assets/images/teacher.png", "Teacher",
+                                     (){
+                                   Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                                 }),
+                             WelcomeScreenCard(context, "assets/images/admin.png", "Admin",
+                                     (){
+                                   Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                                 })
                             ],
                           ),
                           SizedBox(height: 15,),

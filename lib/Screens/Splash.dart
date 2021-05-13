@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Container(
         height: screenHeight(context),
         width: screenWidth(context),
-        child: Image.asset("assets/images/Logo.png",fit: BoxFit.fitWidth,),
+        child: Image.asset("assets/images/Logo.png",fit: BoxFit.contain,),
       )
     );
   }
