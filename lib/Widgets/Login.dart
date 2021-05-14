@@ -8,6 +8,7 @@ import 'package:mymasterje/screens/OTP.dart';
 import 'package:mymasterje/studentscreens/StudentForm.dart';
 import 'package:mymasterje/studentscreens/StudentProfile.dart';
 import 'package:mymasterje/techerscreens/TeacherForm.dart';
+import 'package:mymasterje/techerscreens/TeacherProfile.dart';
 import 'package:mymasterje/utils/UnderDevelopment.dart';
 import 'package:mymasterje/widgets/LoginTextField.dart';
 
@@ -44,6 +45,15 @@ class _LoginState extends State<Login> {
 
             ));
         if(value.data()['role']=='teacher')
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      TeacherProfile()
+                //TODO
+
+              ));
+        if(value.data()['role']=='admin')
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
@@ -117,6 +127,9 @@ class _LoginState extends State<Login> {
                         await firebaseAuth
                             .signInWithCredential(credential)
                             .then((UserCredential result) {
+                              firestoreInstance.collection('users').doc(result.user.uid).set({
+                                "contactno": mobile.text,
+                              },SetOptions(merge: true));
                          checkroleexist();
                         })
                             .catchError((e) {

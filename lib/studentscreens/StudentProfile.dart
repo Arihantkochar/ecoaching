@@ -10,19 +10,19 @@ class StudentProfile extends StatefulWidget {
   @override
   _StudentProfileState createState() => _StudentProfileState();
 }
-String fname = "";
-String mname = "";
-String contactno = "";
-String alternatecontactno = "";
-String email = "";
-String grade = "";
-String school = "";
-
 
 class _StudentProfileState extends State<StudentProfile> {
   var firebaseInstance = FirebaseFirestore.instance;
   var firebaseUser = FirebaseAuth.instance.currentUser;
-  Widget editabletextfield(String hinttext, String label, String _value) =>
+  TextEditingController fname = TextEditingController(text: "");
+  TextEditingController mname = TextEditingController(text: "");
+  TextEditingController contactno = TextEditingController(text: "");
+  TextEditingController alternatecontactno = TextEditingController(text: "");
+  TextEditingController email = TextEditingController(text: "");
+  TextEditingController grade = TextEditingController(text: "");
+  TextEditingController school = TextEditingController(text: "");
+
+  Widget editabletextfield(String hinttext, String label, TextEditingController controller) =>
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,10 +32,10 @@ class _StudentProfileState extends State<StudentProfile> {
             style: TextStyle(fontSize: 18),
           ),
           TextField(
+            controller: controller,
             onChanged: (value) {
               setState(() {
                 print(value);
-                _value = value;
               });
             },
             decoration: InputDecoration(
@@ -162,18 +162,23 @@ class _StudentProfileState extends State<StudentProfile> {
                                       text: "SAVE",
                                       onpressed: () {
                                         print("Save clicked");
-                                        print(fname);
+                                        print(fname.text);
                                         firebaseInstance
                                             .collection('users')
                                             .doc(firebaseUser.uid)
                                             .update({
-                                          "fname": fname == ""?snapshot.data['fname']:fname
-
+                                          "fname": fname.text == ""?snapshot.data['fname']:fname.text,
+                                          "mname": mname.text == ""?snapshot.data['mname']:mname.text,
+                                          "contactno": contactno.text == ""?snapshot.data['contactno']:contactno.text,
+                                          "alternatemobile": alternatecontactno.text == ""?snapshot.data['alternatemobile']:alternatecontactno.text,
+                                          "email": email.text == ""?snapshot.data['email']:email.text,
+                                          "grade": grade.text == ""?snapshot.data['grade']:grade.text,
+                                          "school": school.text == ""?snapshot.data['school']:school.text,
                                         }).then((_) {
                                           print("success!");
                                         });
                                       },
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),

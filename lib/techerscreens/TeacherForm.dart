@@ -225,7 +225,7 @@ class _TeacherFormState extends State<TeacherForm> {
                     "subject3": subject3,
                     "grade": grade,
                     "role":"teacher"
-                  });/**/
+                  },SetOptions(merge: true));/**/
                 },
               ),
             SizedBox(

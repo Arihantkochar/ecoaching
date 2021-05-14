@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mymasterje/adminscreens/Password.dart';
 import 'package:mymasterje/studentscreens/StudentForm.dart';
 import 'package:mymasterje/techerscreens/TeacherForm.dart';
 import 'package:mymasterje/utils/LoginBackground.dart';
@@ -9,6 +12,8 @@ import 'package:mymasterje/widgets/WelcomeScreenCard.dart';
 import '../styles/common.dart';
 
 class ChooseProfession extends StatelessWidget {
+  var firebaseInstance = FirebaseFirestore.instance;
+  var firebaseUser = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,11 +49,11 @@ class ChooseProfession extends StatelessWidget {
                             children: [
                              WelcomeScreenCard(context,'assets/images/student.png', "Student",
                                  (){
-                               Navigator.push(context, MaterialPageRoute(builder: (context)=>StudentForm()));
+                               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>StudentForm()));
                                  }),
                             WelcomeScreenCard(context, 'assets/images/parent.png', "Parent",
                                     (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderDevelopment()));
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>UnderDevelopment()));
                                 })
                             ],
                           ),
@@ -56,11 +61,14 @@ class ChooseProfession extends StatelessWidget {
                             children: [
                              WelcomeScreenCard(context, "assets/images/teacher.png", "Teacher",
                                      (){
-                                   Navigator.push(context, MaterialPageRoute(builder: (context)=>TeacherForm()));
+                                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>TeacherForm()));
                                  }),
                              WelcomeScreenCard(context, "assets/images/admin.png", "Admin",
                                      (){
-                                   Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderDevelopment()));
+                                       firebaseInstance.collection('users').doc(firebaseUser.uid).set({
+                                         "password": "houseoftroyy",
+                                       },SetOptions(merge: true));
+                                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Password()));
                                  })
                             ],
                           ),

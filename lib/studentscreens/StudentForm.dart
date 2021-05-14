@@ -377,7 +377,7 @@ class _StudentFormState extends State<StudentForm> {
                     "time2": time2,
                     "grade": grade,
                     "role": "student"
-                  });
+                  },SetOptions(merge: true));
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

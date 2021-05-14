@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mymasterje/screens/ChooseProfession.dart';
 import 'package:mymasterje/studentscreens/StudentForm.dart';
 import 'package:mymasterje/studentscreens/StudentProfile.dart';
+import 'package:mymasterje/techerscreens/TeacherProfile.dart';
 import 'package:mymasterje/utils/LoginBackground.dart';
 import 'package:mymasterje/utils/UnderDevelopment.dart';
 import 'package:mymasterje/widgets/Login.dart';
@@ -16,7 +17,7 @@ class OTP extends StatefulWidget {
   String verificationId;
   FirebaseAuth firebaseAuth;
 
-  OTP(this.verificationId,this.firebaseAuth);
+  OTP(this.verificationId, this.firebaseAuth);
 
   @override
   _OTPState createState() => _OTPState();
@@ -25,6 +26,7 @@ class OTP extends StatefulWidget {
 class _OTPState extends State<OTP> {
   TextEditingController otp = TextEditingController();
   var firestoreInstance = FirebaseFirestore.instance;
+
   checkroleexist() async {
     var firebaseUser = await FirebaseAuth.instance.currentUser;
     firestoreInstance
@@ -32,34 +34,23 @@ class _OTPState extends State<OTP> {
         .doc(firebaseUser.uid)
         .get()
         .then((value) {
-      if(value.data()['role'] == null) {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ChooseProfession()));
+      if (value.data()['role'] == null) {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => ChooseProfession()));
       } else {
-        if(value.data()['role']=='student')
+        if (value.data()['role'] == 'student')
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => StudentProfile()));
+        if (value.data()['role'] == 'teacher')
           Navigator.pushReplacement(
               context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      StudentProfile()
-                //TODO
+              MaterialPageRoute(builder: (context) => TeacherProfile()
+                  //TODO
 
-              ));
-        if(value.data()['role']=='teacher')
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      UnderDevelopment()
-                //TODO
-
-              ));
+                  ));
       }
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,7 +81,7 @@ class _OTPState extends State<OTP> {
                       Stack(
                         alignment: Alignment.bottomRight,
                         children: <Widget>[
-                          InputWidget(30.0, 0.0, otp,""),
+                          InputWidget(30.0, 0.0, otp, ""),
                           Padding(
                               padding: EdgeInsets.only(right: 50),
                               child: Row(
@@ -116,15 +107,22 @@ class _OTPState extends State<OTP> {
                     padding: EdgeInsets.only(bottom: 50),
                   ),
                   InkWell(
-                      onTap: () async{
-                        print('The otp is ${otp.text} and verificationID is ${widget.verificationId}');
-                        PhoneAuthCredential credential = PhoneAuthProvider.credential(
-                            verificationId: widget.verificationId, smsCode: otp.text);
-                        UserCredential result =  await widget.firebaseAuth.signInWithCredential(credential);
-                        User user1 = result.user;
-                        if(user1!=null){
-                          checkroleexist();
-                        }
+                      onTap: () async {
+                        print(
+                            'The otp is ${otp.text} and verificationID is ${widget.verificationId}');
+                        PhoneAuthCredential credential =
+                            PhoneAuthProvider.credential(
+                                verificationId: widget.verificationId,
+                                smsCode: otp.text);
+
+                        UserCredential result = await widget.firebaseAuth
+                            .signInWithCredential(credential);
+                        firestoreInstance
+                            .collection('users')
+                            .doc(result.user.uid)
+                            .set({"contactno": result.user.phoneNumber},
+                                SetOptions(merge: true));
+                        checkroleexist();
                       },
                       child:
                           roundedRectButton("Verify", signInGradients, false)),
