@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mymasterje/screens/ChooseProfession.dart';
 import 'package:mymasterje/studentscreens/StudentForm.dart';
+import 'package:mymasterje/studentscreens/StudentProfile.dart';
 import 'package:mymasterje/utils/LoginBackground.dart';
+import 'package:mymasterje/utils/UnderDevelopment.dart';
 import 'package:mymasterje/widgets/Login.dart';
 import 'package:mymasterje/widgets/LoginTextField.dart';
 
@@ -20,6 +24,41 @@ class OTP extends StatefulWidget {
 
 class _OTPState extends State<OTP> {
   TextEditingController otp = TextEditingController();
+  var firestoreInstance = FirebaseFirestore.instance;
+  checkroleexist() async {
+    var firebaseUser = await FirebaseAuth.instance.currentUser;
+    firestoreInstance
+        .collection("users")
+        .doc(firebaseUser.uid)
+        .get()
+        .then((value) {
+      if(value.data()['role'] == null) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ChooseProfession()));
+      } else {
+        if(value.data()['role']=='student')
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      StudentProfile()
+                //TODO
+
+              ));
+        if(value.data()['role']=='teacher')
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      UnderDevelopment()
+                //TODO
+
+              ));
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +123,7 @@ class _OTPState extends State<OTP> {
                         UserCredential result =  await widget.firebaseAuth.signInWithCredential(credential);
                         User user1 = result.user;
                         if(user1!=null){
-                          //TODO implement homee page
-                          Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (context) => StudentForm()));
+                          checkroleexist();
                         }
                       },
                       child:

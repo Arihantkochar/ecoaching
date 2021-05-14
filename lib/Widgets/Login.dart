@@ -1,9 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mymasterje/screens/ChooseProfession.dart';
 import 'package:mymasterje/screens/Home.dart';
 import 'package:mymasterje/screens/Loading.dart';
 import 'package:mymasterje/screens/OTP.dart';
 import 'package:mymasterje/studentscreens/StudentForm.dart';
+import 'package:mymasterje/studentscreens/StudentProfile.dart';
+import 'package:mymasterje/techerscreens/TeacherForm.dart';
+import 'package:mymasterje/utils/UnderDevelopment.dart';
 import 'package:mymasterje/widgets/LoginTextField.dart';
 
 class Login extends StatefulWidget {
@@ -14,6 +19,43 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   var firebaseAuth = FirebaseAuth.instance;
   TextEditingController mobile = TextEditingController();
+  var firestoreInstance = FirebaseFirestore.instance;
+
+  checkroleexist() async {
+    var firebaseUser = await FirebaseAuth.instance.currentUser;
+    firestoreInstance
+        .collection("users")
+        .doc(firebaseUser.uid)
+        .get()
+        .then((value) {
+      if(value.data()['role'] == null) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ChooseProfession()));
+      } else {
+        if(value.data()['role']=='student')
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    StudentProfile()
+            //TODO
+
+            ));
+        if(value.data()['role']=='teacher')
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      UnderDevelopment()
+                //TODO
+
+              ));
+      }
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +117,7 @@ class _LoginState extends State<Login> {
                         await firebaseAuth
                             .signInWithCredential(credential)
                             .then((UserCredential result) {
-                          Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (context) => StudentForm()));
+                         checkroleexist();
                         })
                             .catchError((e) {
                           print(e);

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mymasterje/studentscreens/StudentForm.dart';
+import 'package:mymasterje/techerscreens/TeacherForm.dart';
 import 'package:mymasterje/utils/LoginBackground.dart';
 import 'package:mymasterje/screens/LoginScreen.dart';
+import 'package:mymasterje/utils/UnderDevelopment.dart';
 import 'package:mymasterje/widgets/WelcomeScreenCard.dart';
 import '../styles/common.dart';
 
@@ -41,11 +44,11 @@ class ChooseProfession extends StatelessWidget {
                             children: [
                              WelcomeScreenCard(context,'assets/images/student.png', "Student",
                                  (){
-                               Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                               Navigator.push(context, MaterialPageRoute(builder: (context)=>StudentForm()));
                                  }),
                             WelcomeScreenCard(context, 'assets/images/parent.png', "Parent",
                                     (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderDevelopment()));
                                 })
                             ],
                           ),
@@ -53,11 +56,11 @@ class ChooseProfession extends StatelessWidget {
                             children: [
                              WelcomeScreenCard(context, "assets/images/teacher.png", "Teacher",
                                      (){
-                                   Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                                   Navigator.push(context, MaterialPageRoute(builder: (context)=>TeacherForm()));
                                  }),
                              WelcomeScreenCard(context, "assets/images/admin.png", "Admin",
                                      (){
-                                   Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                                   Navigator.push(context, MaterialPageRoute(builder: (context)=>UnderDevelopment()));
                                  })
                             ],
                           ),
