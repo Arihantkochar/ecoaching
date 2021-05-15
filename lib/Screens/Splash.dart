@@ -19,14 +19,15 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Future.delayed(Duration(seconds: 5), () {
       FirebaseAuth.instance.authStateChanges().listen((User user) {
-        FirebaseFirestore.instance.collection('users').doc(user.uid).get().then((value) {
         if(user == null)
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => LoginScreen(),
               ));
-        else if(value.data()['role'] == "student")
+        else
+        FirebaseFirestore.instance.collection('users').doc(user.uid).get().then((value) {
+         if(value.data()['role'] == "student")
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
