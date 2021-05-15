@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mymasterje/adminscreens/Password.dart';
 import 'package:mymasterje/screens/ChooseProfession.dart';
 import 'package:mymasterje/studentscreens/StudentForm.dart';
 import 'package:mymasterje/studentscreens/StudentProfile.dart';
@@ -48,6 +49,13 @@ class _OTPState extends State<OTP> {
                   //TODO
 
                   ));
+        if (value.data()['role'] == 'admin')
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Password()
+                //TODO
+
+              ));
       }
     });
   }

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mymasterje/adminscreens/Password.dart';
 import 'package:mymasterje/screens/ChooseProfession.dart';
 import 'package:mymasterje/screens/Home.dart';
 import 'package:mymasterje/screens/Loading.dart';
@@ -53,12 +54,10 @@ class _LoginState extends State<Login> {
                 //TODO
 
               ));
-        if(value.data()['role']=='admin')
+        if (value.data()['role'] == 'admin')
           Navigator.pushReplacement(
               context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      UnderDevelopment()
+              MaterialPageRoute(builder: (context) => Password()
                 //TODO
 
               ));
