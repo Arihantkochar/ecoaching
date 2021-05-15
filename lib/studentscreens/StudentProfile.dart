@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mymasterje/screens/Loading.dart';
+import 'package:mymasterje/screens/Splash.dart';
 import 'package:mymasterje/styles/common.dart';
 import 'package:mymasterje/widgets/Button.dart';
 
@@ -14,6 +15,7 @@ class StudentProfile extends StatefulWidget {
 class _StudentProfileState extends State<StudentProfile> {
   var firebaseInstance = FirebaseFirestore.instance;
   var firebaseUser = FirebaseAuth.instance.currentUser;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   TextEditingController fname = TextEditingController(text: "");
   TextEditingController mname = TextEditingController(text: "");
   TextEditingController contactno = TextEditingController(text: "");
@@ -22,7 +24,8 @@ class _StudentProfileState extends State<StudentProfile> {
   TextEditingController grade = TextEditingController(text: "");
   TextEditingController school = TextEditingController(text: "");
 
-  Widget editabletextfield(String hinttext, String label, TextEditingController controller) =>
+  Widget editabletextfield(
+          String hinttext, String label, TextEditingController controller) =>
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,15 +73,16 @@ class _StudentProfileState extends State<StudentProfile> {
           style: TextStyle(color: Theme.of(context).primaryColorLight),
         ),
       ),
-      body: SingleChildScrollView(
-        child: StreamBuilder(
-            stream: firebaseInstance
-                .collection('users')
-                .doc(firebaseUser.uid)
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) return Loading();
-              return Container(
+      body: StreamBuilder(
+          stream: firebaseInstance
+              .collection('users')
+              .doc(firebaseUser.uid)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return Loading();
+            return SingleChildScrollView(
+              child: Container(
+                height: screenHeight(context)*2.5,
                 color: Theme.of(context).primaryColor,
                 child: Column(
                   children: [
@@ -120,78 +124,106 @@ class _StudentProfileState extends State<StudentProfile> {
                             topLeft: Radius.circular(35)),
                         child: Container(
                           color: Theme.of(context).primaryColorLight,
-                          height: screenSize(context).height * 1.2,
+                          height: screenSize(context).height * 2.5,
                           child: Padding(
                             padding: const EdgeInsets.all(18.0),
-                            child: SingleChildScrollView(
-                                child: Container(
-                              height: screenHeight(context) * 1.8,
+                            child: Container(
+                              height: screenHeight(context) * 2.5,
                               decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20)),
-                                  color: Colors.white),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              color: Colors.white),
                               child: Padding(
-                                padding: const EdgeInsets.all(18.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    editabletextfield(snapshot.data['fname'],
-                                        "Father's Name", fname),
-                                    editabletextfield(snapshot.data['mname'],
-                                        "Mother's Name", mname),
-                                    editabletextfield(
-                                        snapshot.data['contactno'],
-                                        "Contact No.",
-                                        contactno),
-                                    editabletextfield(
-                                        snapshot.data['alternatemobile'],
-                                        "Alternate Contact No.",
-                                        alternatecontactno),
-                                    editabletextfield(snapshot.data['email'],
-                                        "Email Id", email),
-                                    editabletextfield(
-                                        snapshot.data['grade'], "Grade", grade),
-                                    editabletextfield(snapshot.data['school'],
-                                        "School", school),
-                                    SizedBox(height: 20,),
-                                    Button(
-                                      text: "SAVE",
-                                      onpressed: () {
-                                        print("Save clicked");
-                                        print(fname.text);
-                                        firebaseInstance
-                                            .collection('users')
-                                            .doc(firebaseUser.uid)
-                                            .update({
-                                          "fname": fname.text == ""?snapshot.data['fname']:fname.text,
-                                          "mname": mname.text == ""?snapshot.data['mname']:mname.text,
-                                          "contactno": contactno.text == ""?snapshot.data['contactno']:contactno.text,
-                                          "alternatemobile": alternatecontactno.text == ""?snapshot.data['alternatemobile']:alternatecontactno.text,
-                                          "email": email.text == ""?snapshot.data['email']:email.text,
-                                          "grade": grade.text == ""?snapshot.data['grade']:grade.text,
-                                          "school": school.text == ""?snapshot.data['school']:school.text,
-                                        }).then((_) {
-                                          print("success!");
-                                        });
-                                      },
-                                    ),
-                                  ],
+                            padding: const EdgeInsets.all(18.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 10,
                                 ),
+                                editabletextfield(snapshot.data['fname'],
+                                    "Father's Name", fname),
+                                editabletextfield(snapshot.data['mname'],
+                                    "Mother's Name", mname),
+                                editabletextfield(
+                                    snapshot.data['contactno'],
+                                    "Contact No.",
+                                    contactno),
+                                editabletextfield(
+                                    snapshot.data['alternatemobile'],
+                                    "Alternate Contact No.",
+                                    alternatecontactno),
+                                editabletextfield(snapshot.data['email'],
+                                    "Email Id", email),
+                                editabletextfield(
+                                    snapshot.data['grade'], "Grade", grade),
+                                editabletextfield(snapshot.data['school'],
+                                    "School", school),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Button(
+                                  text: "SAVE",
+                                  onpressed: () {
+                                    print("Save clicked");
+                                    print(fname.text);
+                                    firebaseInstance
+                                        .collection('users')
+                                        .doc(firebaseUser.uid)
+                                        .update({
+                                      "fname": fname.text == ""
+                                          ? snapshot.data['fname']
+                                          : fname.text,
+                                      "mname": mname.text == ""
+                                          ? snapshot.data['mname']
+                                          : mname.text,
+                                      "contactno": contactno.text == ""
+                                          ? snapshot.data['contactno']
+                                          : contactno.text,
+                                      "alternatemobile":
+                                          alternatecontactno.text == ""
+                                              ? snapshot
+                                                  .data['alternatemobile']
+                                              : alternatecontactno.text,
+                                      "email": email.text == ""
+                                          ? snapshot.data['email']
+                                          : email.text,
+                                      "grade": grade.text == ""
+                                          ? snapshot.data['grade']
+                                          : grade.text,
+                                      "school": school.text == ""
+                                          ? snapshot.data['school']
+                                          : school.text,
+                                    }).then((_) {
+                                      print("success!");
+                                    });
+                                  },
+                                ),
+                                SizedBox(height: 10,),
+                                Button(
+                                  text: "Log Out",
+                                  onpressed: () async {
+                                    await _auth.signOut();
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => SplashScreen()));
+                                  },
+                                )
+                              ],
+                            ),
                               ),
-                            )),
+                            ),
                           ),
                         ),
                       ),
                     )
                   ],
                 ),
-              );
-            }),
-      ),
+              ),
+            );
+          }),
     );
   }
 }
