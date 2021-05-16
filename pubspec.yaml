@@ -29,6 +29,11 @@ dependencies:
   firebase_auth:
   flutter_spinkit:
   cloud_firestore:
+  intl:
+  googleapis:
+  googleapis_auth:
+  url_launcher:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
