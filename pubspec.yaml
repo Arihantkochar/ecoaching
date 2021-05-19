@@ -33,6 +33,12 @@ dependencies:
   googleapis:
   googleapis_auth:
   url_launcher:
+  file_picker:
+  firebase_storage:
+  flutter_downloader:
+  syncfusion_flutter_pdfviewer:
+  dio:
+  path_provider:
 
 dev_dependencies:
   flutter_test:

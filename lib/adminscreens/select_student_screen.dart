@@ -14,23 +14,12 @@ class SelectStudentScreen extends StatefulWidget {
 class _SelectStudentScreenState extends State<SelectStudentScreen> {
   bool _checkbox = false;
   bool _checkboxListTile = false;
-  List _checkboxList = List.generate(100, (index) => false);
+  //List _checkboxList = List.generate(100, (index) => false);
+  List _checkboxList = [];
+  List <String>selectedmember =[];
   TextEditingController _searchController = TextEditingController();
 
   String name = "";
-
-  // Future<int> getCount() async => FirebaseFirestore.instance
-  //     .collection('users') //your collectionref
-  //     .where('role', isEqualTo: "student")
-  //     .get()
-  //     .then((value) {
-  //   var count = 0;
-  //   count = value.docs.length;
-  //   print("--count-- $count");
-  //
-  //   return count;
-  // });
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +46,6 @@ class _SelectStudentScreenState extends State<SelectStudentScreen> {
                     .snapshots()
                     .length);
                 // print("length $snapshot.data.docs.length");
-                print(_checkboxList);
                 print("_______");
                 return (snapshot.connectionState == ConnectionState.waiting)
                     ? Loading()
@@ -100,6 +88,8 @@ class _SelectStudentScreenState extends State<SelectStudentScreen> {
                             child: ListView.builder(
                                 itemCount: snapshot.data.docs.length,
                                 itemBuilder: (context, i) {
+                                  for(int i=0;i<snapshot.data.docs.length;i++)
+                                    _checkboxList.add(false);
                                   return _searchController.text == ''
                                       ? Card(
                                           shape: RoundedRectangleBorder(
@@ -115,18 +105,17 @@ class _SelectStudentScreenState extends State<SelectStudentScreen> {
                                               subtitle: Text(snapshot
                                                   .data.docs[i]['email']),
                                               trailing: Checkbox(
-                                                // value: _checkboxListTile,
+                                                 //value: _checkboxListTile,
                                                 value: _checkboxList[i],
                                                 onChanged: (value) {
-                                                  print(
-                                                      "Before: $i ${_checkboxList[i]}");
+                                                  selectedmember.add(snapshot.data.docs[i]['email']);
+                                                  print("Emails........$selectedmember");
+                                                  print("hiiiiiiiiii ${snapshot.data.docs[i].id}");
                                                   setState(() {
-                                                    _checkboxList[i] =
-                                                        !_checkboxList[i];
-                                                    // _checkboxListTile = !_checkboxListTile;
+                                                    _checkboxList[i] = !_checkboxList[i];
                                                   });
-                                                  print(
-                                                      "After: $i ${_checkboxList[i]}");
+                                                  // print(
+                                                  //     "After: $i ${_checkboxList[i]}");
                                                 },
                                               )),
                                         )
@@ -149,15 +138,18 @@ class _SelectStudentScreenState extends State<SelectStudentScreen> {
                                                     // value: _checkboxListTile,
                                                     value: _checkboxList[i],
                                                     onChanged: (value) {
-                                                      print(
-                                                          "Before: $i ${_checkboxList[i]}");
+                                                      selectedmember.add(snapshot.data.docs[i]['email']);
+                                                      print("Emails........$selectedmember");
+                                                      // print(
+                                                      //     "Before: $i ${_checkboxList[i]}");
                                                       setState(() {
+                                                       // _checkbox = !_checkbox;
                                                         _checkboxList[i] =
                                                             !_checkboxList[i];
                                                         // _checkboxListTile = !_checkboxListTile;
                                                       });
-                                                      print(
-                                                          "After: $i ${_checkboxList[i]}");
+                                                      // print(
+                                                      //     "After: $i ${_checkboxList[i]}");
                                                     },
                                                   )),
                                             )
@@ -172,7 +164,7 @@ class _SelectStudentScreenState extends State<SelectStudentScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            SelectTeacherScreen()));
+                                            SelectTeacherScreen(selectedmember)));
                               },
                               text: "Next",
                             ),

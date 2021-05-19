@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mymasterje/styles/common.dart';
+import 'package:mymasterje/techerscreens/TeacherHome.dart';
 import 'package:mymasterje/widgets/Button.dart';
 import 'package:mymasterje/widgets/FormTextField.dart';
 
@@ -17,7 +18,8 @@ class _TeacherFormState extends State<TeacherForm> {
   TextEditingController email = TextEditingController();
   final firestoreInstance = FirebaseFirestore.instance;
 
-  String grade,subject1,subject2,subject3;
+  String grade, subject1, subject2, subject3;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,7 +98,7 @@ class _TeacherFormState extends State<TeacherForm> {
                     style: TextStyle(color: Colors.white),
                     iconEnabledColor: Colors.black,
                     items:
-                    (subject).map<DropdownMenuItem<String>>((String value) {
+                        (subject).map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(
@@ -137,7 +139,7 @@ class _TeacherFormState extends State<TeacherForm> {
                     style: TextStyle(color: Colors.white),
                     iconEnabledColor: Colors.black,
                     items:
-                    (subject).map<DropdownMenuItem<String>>((String value) {
+                        (subject).map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(
@@ -178,7 +180,7 @@ class _TeacherFormState extends State<TeacherForm> {
                     style: TextStyle(color: Colors.white),
                     iconEnabledColor: Colors.black,
                     items:
-                    (subject).map<DropdownMenuItem<String>>((String value) {
+                        (subject).map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(
@@ -206,28 +208,30 @@ class _TeacherFormState extends State<TeacherForm> {
             SizedBox(
               height: screenHeight(context, dividedBy: 38),
             ),
-              Button(
-                text: "Submit",
-                onpressed: () {
-                  print(subject1);
-                  print(grade);
-                  var firebaseUser = FirebaseAuth.instance.currentUser;
-                  firestoreInstance
-                      .collection("users")
-                      .doc(firebaseUser.uid)
-                      .set({
-                    "name": name.text,
-                    "alternatemobile": alternatemobile.text,
-                    "contactno": firebaseUser.phoneNumber,
-                    "email": email.text,
-                    "subject1": subject1,
-                    "subject2": subject2,
-                    "subject3": subject3,
-                    "grade": grade,
-                    "role":"teacher"
-                  },SetOptions(merge: true));/**/
-                },
-              ),
+            Button(
+              text: "Submit",
+              onpressed: () {
+                print(subject1);
+                print(grade);
+                var firebaseUser = FirebaseAuth.instance.currentUser;
+                firestoreInstance
+                    .collection("users")
+                    .doc(firebaseUser.uid)
+                    .set({
+                  "name": name.text,
+                  "alternatemobile": alternatemobile.text,
+                  "contactno": firebaseUser.phoneNumber,
+                  "email": email.text,
+                  "subject1": subject1,
+                  "subject2": subject2,
+                  "subject3": subject3,
+                  "grade": grade,
+                  "role": "teacher"
+                }, SetOptions(merge: true)); /**/
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => TeacherHome()));
+              },
+            ),
             SizedBox(
               height: screenHeight(context, dividedBy: 18),
             ),

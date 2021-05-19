@@ -8,12 +8,7 @@ class UnderDevelopment extends StatelessWidget {
     return Scaffold(
       backgroundColor:Colors.white,
       body: Center(
-        child: Button(text: "Schedule Meeting",onpressed: (){
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => SelectStudentScreen()));
-        },),
+        child:Text("Hold on, This feature is coming soon.")
       ),
     );
   }

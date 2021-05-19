@@ -34,17 +34,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: CustomColor.dark_cyan,
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => CreateScreen(),
-            ),
-          );
-        },
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: CustomColor.dark_cyan,
+      //   child: Icon(Icons.add),
+      //   onPressed: () {
+      //     Navigator.of(context).push(
+      //       MaterialPageRoute(
+      //         builder: (context) => CreateScreen(),
+      //       ),
+      //     );
+      //   },
+      // ),
       body: Padding(
         padding: const EdgeInsets.only(
           left: 16.0,
@@ -133,7 +133,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                                       child: Text(
-                                        event.link!=null?event.link:"waheguru",
+                                        event.link!=null?event.link:"eventlink",
                                         style: TextStyle(
                                           color: CustomColor.dark_blue.withOpacity(0.5),
                                           fontWeight: FontWeight.bold,

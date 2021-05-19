@@ -46,7 +46,7 @@ class CalendarClient {
     try {
       await calendar.events
           .insert(event, calendarId,
-          conferenceDataVersion: hasConferenceSupport ? 1 : 0, sendUpdates: shouldNotifyAttendees ? "all" : "none")
+          conferenceDataVersion: hasConferenceSupport ? 1 : 0, sendUpdates: "all" )
           .then((value) {
         print("Event Status: ${value.status}");
         if (value.status == "confirmed") {

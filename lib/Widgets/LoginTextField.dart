@@ -24,7 +24,7 @@ class InputWidget extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.only(left: 40, right: 20, top: 10, bottom: 10),
             child: TextField(
-              keyboardType: TextInputType.number,
+              //keyboardType: TextInputType.number,
               controller: mobileno,
               decoration: InputDecoration(
                 prefixText: prefix,

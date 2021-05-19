@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mymasterje/adminscreens/AdminHome.dart';
 import 'package:mymasterje/screens/ChooseProfession.dart';
 import 'package:mymasterje/screens/LoginScreen.dart';
+import 'package:mymasterje/studentscreens/StudentHome.dart';
 import 'package:mymasterje/studentscreens/StudentProfile.dart';
 import 'package:mymasterje/styles/common.dart';
+import 'package:mymasterje/techerscreens/TeacherHome.dart';
 import 'package:mymasterje/techerscreens/TeacherProfile.dart';
 import 'package:mymasterje/utils/UnderDevelopment.dart';
 
@@ -31,19 +34,19 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => StudentProfile(),
+                builder: (context) => StudentHome(),
               ));
         else if(value.data()['role'] == "teacher")
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => TeacherProfile(),
+                builder: (context) => TeacherHome(),
               ));
         else if(value.data()['role'] == "admin")
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => UnderDevelopment(),
+                builder: (context) => AdminHome(),
               ));
         });
       });

@@ -1,14 +1,18 @@
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/calendar/v3.dart' as calendar;
 import 'package:intl/intl.dart';
+import 'package:mymasterje/adminscreens/AdminHome.dart';
 import 'package:mymasterje/google%20meet/custom_color/color_theme.dart';
 import 'package:mymasterje/google%20meet/model/event_info_model.dart';
-
 import '../calendar_client.dart';
 import '../storage.dart';
 
 class CreateScreen extends StatefulWidget {
+  List atendees;
+
+  CreateScreen(this.atendees);
+
   @override
   _CreateScreenState createState() => _CreateScreenState();
 }
@@ -23,7 +27,8 @@ class _CreateScreenState extends State<CreateScreen> {
   TextEditingController textControllerTitle;
   TextEditingController textControllerDesc;
   TextEditingController textControllerLocation;
-  TextEditingController textControllerAttendee;
+
+  // TextEditingController textControllerAttendee;
 
   FocusNode textFocusNodeTitle;
   FocusNode textFocusNodeDesc;
@@ -39,6 +44,7 @@ class _CreateScreenState extends State<CreateScreen> {
   String currentLocation;
   String currentEmail;
   String errorString = '';
+
   // List<String> attendeeEmails = [];
   List<calendar.EventAttendee> attendeeEmails = [];
 
@@ -140,6 +146,15 @@ class _CreateScreenState extends State<CreateScreen> {
     return 'Invalid email';
   }
 
+   String getdocid(String email)  {
+    FirebaseFirestore.instance.collection('users').where(
+        FieldPath.documentId, isEqualTo: email).get().then((QuerySnapshot snapshot)=> {
+          snapshot.docs.forEach((element) {
+            return (element.reference.id).toString();
+          })
+    });
+  }
+
   @override
   void initState() {
     textControllerDate = TextEditingController();
@@ -148,7 +163,7 @@ class _CreateScreenState extends State<CreateScreen> {
     textControllerTitle = TextEditingController();
     textControllerDesc = TextEditingController();
     textControllerLocation = TextEditingController();
-    textControllerAttendee = TextEditingController();
+    //textControllerAttendee = TextEditingController();
 
     textFocusNodeTitle = FocusNode();
     textFocusNodeDesc = FocusNode();
@@ -245,19 +260,23 @@ class _CreateScreenState extends State<CreateScreen> {
                       decoration: new InputDecoration(
                         disabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: CustomColor.sea_blue, width: 1),
+                          borderSide:
+                          BorderSide(color: CustomColor.sea_blue, width: 1),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: CustomColor.sea_blue, width: 1),
+                          borderSide:
+                          BorderSide(color: CustomColor.sea_blue, width: 1),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: CustomColor.dark_blue, width: 2),
+                          borderSide: BorderSide(
+                              color: CustomColor.dark_blue, width: 2),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: Colors.redAccent, width: 2),
+                          borderSide:
+                          BorderSide(color: Colors.redAccent, width: 2),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -274,7 +293,8 @@ class _CreateScreenState extends State<CreateScreen> {
                           fontWeight: FontWeight.bold,
                           letterSpacing: 0.5,
                         ),
-                        errorText: isEditingDate && textControllerDate.text != null
+                        errorText:
+                        isEditingDate && textControllerDate.text != null
                             ? textControllerDate.text.isNotEmpty
                             ? null
                             : 'Date can\'t be empty'
@@ -321,19 +341,23 @@ class _CreateScreenState extends State<CreateScreen> {
                       decoration: new InputDecoration(
                         disabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: CustomColor.sea_blue, width: 1),
+                          borderSide:
+                          BorderSide(color: CustomColor.sea_blue, width: 1),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: CustomColor.sea_blue, width: 1),
+                          borderSide:
+                          BorderSide(color: CustomColor.sea_blue, width: 1),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: CustomColor.dark_blue, width: 2),
+                          borderSide: BorderSide(
+                              color: CustomColor.dark_blue, width: 2),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: Colors.redAccent, width: 2),
+                          borderSide:
+                          BorderSide(color: Colors.redAccent, width: 2),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -350,7 +374,8 @@ class _CreateScreenState extends State<CreateScreen> {
                           fontWeight: FontWeight.bold,
                           letterSpacing: 0.5,
                         ),
-                        errorText: isEditingStartTime && textControllerStartTime.text != null
+                        errorText: isEditingStartTime &&
+                            textControllerStartTime.text != null
                             ? textControllerStartTime.text.isNotEmpty
                             ? null
                             : 'Start time can\'t be empty'
@@ -397,19 +422,23 @@ class _CreateScreenState extends State<CreateScreen> {
                       decoration: new InputDecoration(
                         disabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: CustomColor.sea_blue, width: 1),
+                          borderSide:
+                          BorderSide(color: CustomColor.sea_blue, width: 1),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: CustomColor.sea_blue, width: 1),
+                          borderSide:
+                          BorderSide(color: CustomColor.sea_blue, width: 1),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: CustomColor.dark_blue, width: 2),
+                          borderSide: BorderSide(
+                              color: CustomColor.dark_blue, width: 2),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: Colors.redAccent, width: 2),
+                          borderSide:
+                          BorderSide(color: Colors.redAccent, width: 2),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -426,7 +455,8 @@ class _CreateScreenState extends State<CreateScreen> {
                           fontWeight: FontWeight.bold,
                           letterSpacing: 0.5,
                         ),
-                        errorText: isEditingEndTime && textControllerEndTime.text != null
+                        errorText: isEditingEndTime &&
+                            textControllerEndTime.text != null
                             ? textControllerEndTime.text.isNotEmpty
                             ? null
                             : 'End time can\'t be empty'
@@ -489,15 +519,18 @@ class _CreateScreenState extends State<CreateScreen> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: CustomColor.sea_blue, width: 1),
+                          borderSide:
+                          BorderSide(color: CustomColor.sea_blue, width: 1),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: CustomColor.dark_blue, width: 2),
+                          borderSide: BorderSide(
+                              color: CustomColor.dark_blue, width: 2),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: Colors.redAccent, width: 2),
+                          borderSide:
+                          BorderSide(color: Colors.redAccent, width: 2),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -508,13 +541,15 @@ class _CreateScreenState extends State<CreateScreen> {
                           top: 16,
                           right: 16,
                         ),
-                        hintText: 'eg: Birthday party of John',
+                        hintText: 'eg: Organic Chemistry',
                         hintStyle: TextStyle(
                           color: Colors.grey.withOpacity(0.6),
                           fontWeight: FontWeight.bold,
                           letterSpacing: 0.5,
                         ),
-                        errorText: isEditingTitle ? _validateTitle(currentTitle) : null,
+                        errorText: isEditingTitle
+                            ? _validateTitle(currentTitle)
+                            : null,
                         errorStyle: TextStyle(
                           fontSize: 12,
                           color: Colors.redAccent,
@@ -559,7 +594,8 @@ class _CreateScreenState extends State<CreateScreen> {
                       },
                       onSubmitted: (value) {
                         textFocusNodeDesc.unfocus();
-                        FocusScope.of(context).requestFocus(textFocusNodeLocation);
+                        FocusScope.of(context)
+                            .requestFocus(textFocusNodeLocation);
                       },
                       style: TextStyle(
                         color: Colors.black87,
@@ -573,15 +609,18 @@ class _CreateScreenState extends State<CreateScreen> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: CustomColor.sea_blue, width: 1),
+                          borderSide:
+                          BorderSide(color: CustomColor.sea_blue, width: 1),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: CustomColor.dark_blue, width: 2),
+                          borderSide: BorderSide(
+                              color: CustomColor.dark_blue, width: 2),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: Colors.redAccent, width: 2),
+                          borderSide:
+                          BorderSide(color: Colors.redAccent, width: 2),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -679,61 +718,62 @@ class _CreateScreenState extends State<CreateScreen> {
                     //   ),
                     // ),
                     SizedBox(height: 10),
-                    // RichText(
-                    //   text: TextSpan(
-                    //     text: 'Attendees',
-                    //     style: TextStyle(
-                    //       color: CustomColor.dark_cyan,
-                    //       fontFamily: 'Raleway',
-                    //       fontSize: 20,
-                    //       fontWeight: FontWeight.bold,
-                    //       letterSpacing: 1,
-                    //     ),
-                    //     children: <TextSpan>[
-                    //       TextSpan(
-                    //         text: ' ',
-                    //         style: TextStyle(
-                    //           color: Colors.red,
-                    //           fontSize: 28,
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    // SizedBox(height: 10),
-                    // ListView.builder(
-                    //   shrinkWrap: true,
-                    //   physics: PageScrollPhysics(),
-                    //   itemCount: attendeeEmails.length,
-                    //   itemBuilder: (context, index) {
-                    //     return Padding(
-                    //       padding: const EdgeInsets.only(bottom: 8.0),
-                    //       child: Row(
-                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //         children: [
-                    //           Text(
-                    //             attendeeEmails[index].email,
-                    //             style: TextStyle(
-                    //               color: CustomColor.neon_green,
-                    //               fontWeight: FontWeight.w600,
-                    //               fontSize: 16,
-                    //             ),
-                    //           ),
-                    //           IconButton(
-                    //             icon: Icon(Icons.close),
-                    //             onPressed: () {
-                    //               setState(() {
-                    //                 attendeeEmails.removeAt(index);
-                    //               });
-                    //             },
-                    //             color: Colors.red,
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     );
-                    //   },
-                    // ),
-                    // SizedBox(height: 10),
+                    RichText(
+                      text: TextSpan(
+                        text: 'Attendees',
+                        style: TextStyle(
+                          color: CustomColor.dark_cyan,
+                          fontFamily: 'Raleway',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: ' ',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 28,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: PageScrollPhysics(),
+                      //itemCount: attendeeEmails.length,
+                      itemCount: widget.atendees.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                widget.atendees[index],
+                                style: TextStyle(
+                                  color: CustomColor.neon_green,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.close),
+                                onPressed: () {
+                                  setState(() {
+                                    widget.atendees.removeAt(index);
+                                  });
+                                },
+                                color: Colors.red,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 10),
                     // Row(
                     //   crossAxisAlignment: CrossAxisAlignment.start,
                     //   children: [
@@ -825,38 +865,38 @@ class _CreateScreenState extends State<CreateScreen> {
                     //     ),
                     //   ],
                     // ),
-                    Visibility(
-                      visible: attendeeEmails.isNotEmpty,
-                      child: Column(
-                        children: [
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Notify attendees',
-                                style: TextStyle(
-                                  color: CustomColor.dark_cyan,
-                                  fontFamily: 'Raleway',
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                              Switch(
-                                value: shouldNofityAttendees,
-                                onChanged: (value) {
-                                  setState(() {
-                                    shouldNofityAttendees = value;
-                                  });
-                                },
-                                activeColor: CustomColor.sea_blue,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Visibility(
+                    //   visible: attendeeEmails.isNotEmpty,
+                    //   child: Column(
+                    //     children: [
+                    //       SizedBox(height: 10),
+                    //       Row(
+                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //         children: [
+                    //           Text(
+                    //             'Notify attendees',
+                    //             style: TextStyle(
+                    //               color: CustomColor.dark_cyan,
+                    //               fontFamily: 'Raleway',
+                    //               fontSize: 20,
+                    //               fontWeight: FontWeight.bold,
+                    //               letterSpacing: 0.5,
+                    //             ),
+                    //           ),
+                    //           Switch(
+                    //             value: shouldNofityAttendees,
+                    //             onChanged: (value) {
+                    //               setState(() {
+                    //                 shouldNofityAttendees = value;
+                    //               });
+                    //             },
+                    //             activeColor: CustomColor.sea_blue,
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -923,10 +963,27 @@ class _CreateScreenState extends State<CreateScreen> {
                               selectedEndTime.minute,
                             ).millisecondsSinceEpoch;
 
-                            print('DIFFERENCE: ${endTimeInEpoch - startTimeInEpoch}');
+                            print(
+                                'DIFFERENCE: ${endTimeInEpoch -
+                                    startTimeInEpoch}');
 
-                            print('Start Time: ${DateTime.fromMillisecondsSinceEpoch(startTimeInEpoch)}');
-                            print('End Time: ${DateTime.fromMillisecondsSinceEpoch(endTimeInEpoch)}');
+                            print(
+                                'Start Time: ${DateTime
+                                    .fromMillisecondsSinceEpoch(
+                                    startTimeInEpoch)}');
+                            print(
+                                'End Time: ${DateTime
+                                    .fromMillisecondsSinceEpoch(
+                                    endTimeInEpoch)}');
+                            for (int i = 0;
+                            i < widget.atendees.length;
+                            i++) {
+                              calendar.EventAttendee eventAttendee =
+                              calendar.EventAttendee();
+                              eventAttendee.email = widget.atendees[i];
+                              attendeeEmails.add(eventAttendee);
+                              //attendeeEmails.add(widget.atendees[i]);
+                            }
 
                             if (endTimeInEpoch - startTimeInEpoch > 0) {
                               if (_validateTitle(currentTitle) == null) {
@@ -936,18 +993,26 @@ class _CreateScreenState extends State<CreateScreen> {
                                     description: currentDesc ?? '',
                                     // location: currentLocation,
                                     attendeeEmailList: attendeeEmails,
-                                    shouldNotifyAttendees: shouldNofityAttendees,
-                                    hasConferenceSupport: hasConferenceSupport,
-                                    startTime: DateTime.fromMillisecondsSinceEpoch(startTimeInEpoch),
-                                    endTime: DateTime.fromMillisecondsSinceEpoch(endTimeInEpoch))
+                                    shouldNotifyAttendees: true,
+                                    hasConferenceSupport:
+                                    hasConferenceSupport,
+                                    startTime: DateTime
+                                        .fromMillisecondsSinceEpoch(
+                                        startTimeInEpoch),
+                                    endTime: DateTime
+                                        .fromMillisecondsSinceEpoch(
+                                        endTimeInEpoch))
                                     .then((eventData) async {
                                   String eventId = eventData['id'];
                                   String eventLink = eventData['link'];
 
                                   List<String> emails = [];
 
-                                  for (int i = 0; i < attendeeEmails.length; i++)
-                                    emails.add(attendeeEmails[i].email);
+                                  for (int i = 0;
+                                  i < widget.atendees.length;
+                                  i++) {
+                                    emails.add(widget.atendees[i]);
+                                  }
 
                                   EventInfo eventInfo = EventInfo(
                                     id: eventId,
@@ -955,16 +1020,25 @@ class _CreateScreenState extends State<CreateScreen> {
                                     description: currentDesc ?? '',
                                     //location: currentLocation,
                                     link: eventLink,
-                                  //  attendeeEmails: emails,
-                                    shouldNotifyAttendees: shouldNofityAttendees,
-                                    hasConfereningSupport: hasConferenceSupport,
+                                    attendeeEmails: attendeeEmails,
+                                    shouldNotifyAttendees: true,
+                                    hasConfereningSupport:
+                                    hasConferenceSupport,
                                     startTimeInEpoch: startTimeInEpoch,
                                     endTimeInEpoch: endTimeInEpoch,
                                   );
-
+                                  for (int i = 0; i < emails.length; i++) {
+                                    //String k = getdocid(emails[i]);
+                                    FirebaseFirestore.instance.collection(
+                                        'users').doc(getdocid(emails[i])).set({
+                                      "meetlink":eventLink
+                                    },SetOptions(merge: true));
+                                  }
                                   await storage
                                       .storeEventData(eventInfo)
-                                      .whenComplete(() => Navigator.of(context).pop())
+                                      .whenComplete(() =>
+                                      Navigator.pop(context)
+                                     )
                                       .catchError(
                                         (e) => print(e),
                                   );
@@ -984,7 +1058,8 @@ class _CreateScreenState extends State<CreateScreen> {
                             } else {
                               setState(() {
                                 isErrorTime = true;
-                                errorString = 'Invalid time! Please use a proper start and end time';
+                                errorString =
+                                'Invalid time! Please use a proper start and end time';
                               });
                             }
                           } else {
@@ -1012,7 +1087,9 @@ class _CreateScreenState extends State<CreateScreen> {
                             width: 28,
                             child: CircularProgressIndicator(
                               strokeWidth: 2,
-                              valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
+                              valueColor:
+                              new AlwaysStoppedAnimation<Color>(
+                                  Colors.white),
                             ),
                           )
                               : Text(
@@ -1021,7 +1098,7 @@ class _CreateScreenState extends State<CreateScreen> {
                               fontFamily: 'Raleway',
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
-                              color:CustomColor.sea_blue,
+                              color: CustomColor.sea_blue,
                               letterSpacing: 1.5,
                             ),
                           ),

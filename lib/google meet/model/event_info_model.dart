@@ -6,7 +6,7 @@ class EventInfo {
   final String description;
  // final String location;
   final String link;
- // final List<dynamic> attendeeEmails;
+  final List<dynamic> attendeeEmails;
   final bool shouldNotifyAttendees;
   final bool hasConfereningSupport;
   final int startTimeInEpoch;
@@ -18,7 +18,7 @@ class EventInfo {
     @required this.description,
  //   @required this.location,
     @required this.link,
- //   @required this.attendeeEmails,
+    @required this.attendeeEmails,
     @required this.shouldNotifyAttendees,
     @required this.hasConfereningSupport,
     @required this.startTimeInEpoch,
@@ -31,7 +31,7 @@ class EventInfo {
         description = snapshot['desc'],
       //  location = snapshot['loc'],
         link = snapshot['link']??'No link available',
-      //  attendeeEmails = snapshot['emails'] ?? '',
+        attendeeEmails = snapshot['emails'] ?? '',
         shouldNotifyAttendees = snapshot['should_notify'],
         hasConfereningSupport = snapshot['has_conferencing'],
         startTimeInEpoch = snapshot['start'],
@@ -44,7 +44,7 @@ class EventInfo {
       'desc': description,
      // 'loc': location,
       'link': link,
-    //  'emails': attendeeEmails,
+      'emails': attendeeEmails,
       'should_notify': shouldNotifyAttendees,
       'has_conferencing': hasConfereningSupport,
       'start': startTimeInEpoch,

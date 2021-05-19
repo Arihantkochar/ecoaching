@@ -1,24 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mymasterje/Screens/Loading.dart';
+import 'package:mymasterje/google%20meet/screens/create_screen.dart';
 import 'package:mymasterje/google%20meet/screens/dashboard_screen.dart';
 import 'package:mymasterje/styles/themes.dart';
-
 import '../view.dart';
 
 class SelectTeacherScreen extends StatefulWidget {
+  List <String>selectedmember ;
+
+  SelectTeacherScreen(this.selectedmember);
+
   @override
   _SelectTeacherScreenState createState() => _SelectTeacherScreenState();
 }
 
 class _SelectTeacherScreenState extends State<SelectTeacherScreen> {
 
-  List _checkboxList = List.generate(100, (index) => false);
+ // List _checkboxList = List.generate(100, (index) => false);
+  List _checkboxList = [];
   TextEditingController _searchController = TextEditingController();
-
   String name = "";
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +91,8 @@ class _SelectTeacherScreenState extends State<SelectTeacherScreen> {
                       child: ListView.builder(
                           itemCount: snapshot.data.docs.length,
                           itemBuilder: (context, i) {
+                            for(int i=0;i<snapshot.data.docs.length;i++)
+                              _checkboxList.add(false);
                             return _searchController.text == ''
                                 ? Card(
                               shape: RoundedRectangleBorder(
@@ -107,7 +111,8 @@ class _SelectTeacherScreenState extends State<SelectTeacherScreen> {
                                     // value: _checkboxListTile,
                                     value: _checkboxList[i],
                                     onChanged: (value) {
-
+                                      widget.selectedmember.add(snapshot.data.docs[i]['email']);
+                                      print("Email in teacher screen ${widget.selectedmember}");
                                       setState(() {
                                         _checkboxList[i] =
                                         !_checkboxList[i];
@@ -136,11 +141,11 @@ class _SelectTeacherScreenState extends State<SelectTeacherScreen> {
                                     // value: _checkboxListTile,
                                     value: _checkboxList[i],
                                     onChanged: (value) {
-
+                                      widget.selectedmember.add(snapshot.data.docs[i]['email']);
+                                      print("Email in teacher screen ${widget.selectedmember}");
                                       setState(() {
                                         _checkboxList[i] =
                                         !_checkboxList[i];
-
                                       });
 
                                     },
@@ -157,7 +162,7 @@ class _SelectTeacherScreenState extends State<SelectTeacherScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      DashboardScreen()));
+                                      CreateScreen(widget.selectedmember)));
                         },
                         text: "Next",
                       ),

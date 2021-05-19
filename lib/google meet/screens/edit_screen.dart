@@ -54,7 +54,7 @@ class _EditScreenState extends State<EditScreen> {
   bool isEditingEmail = false;
   bool isEditingLink = false;
   bool isErrorTime = false;
-  bool shouldNofityAttendees = false;
+  bool shouldNofityAttendees = true;
   bool hasConferenceSupport = false;
 
   bool isDataStorageInProgress = false;
@@ -158,12 +158,12 @@ class _EditScreenState extends State<EditScreen> {
     eventId = widget.event.id;
     hasConferenceSupport = widget.event.hasConfereningSupport;
 
-    // widget.event.attendeeEmails.forEach((element) {
-    //   calendar.EventAttendee eventAttendee = calendar.EventAttendee();
-    //   eventAttendee.email = element;
-    //
-    //   attendeeEmails.add(eventAttendee);
-    // });
+    widget.event.attendeeEmails.forEach((element) {
+      calendar.EventAttendee eventAttendee = calendar.EventAttendee();
+      eventAttendee.email = element;
+
+      attendeeEmails.add(eventAttendee);
+    });
 
     String dateString = DateFormat.yMMMMd().format(startTime);
     String startString = DateFormat.jm().format(startTime);
@@ -748,184 +748,184 @@ class _EditScreenState extends State<EditScreen> {
                     //   ),
                     // ),
                     // SizedBox(height: 10),
-                    // RichText(
-                    //   text: TextSpan(
-                    //     text: 'Attendees',
-                    //     style: TextStyle(
-                    //       color: CustomColor.dark_cyan,
-                    //       fontFamily: 'Raleway',
-                    //       fontSize: 20,
-                    //       fontWeight: FontWeight.bold,
-                    //       letterSpacing: 1,
-                    //     ),
-                    //     children: <TextSpan>[
-                    //       TextSpan(
-                    //         text: ' ',
-                    //         style: TextStyle(
-                    //           color: Colors.red,
-                    //           fontSize: 28,
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    // SizedBox(height: 10),
-                    // ListView.builder(
-                    //   shrinkWrap: true,
-                    //   physics: PageScrollPhysics(),
-                    //   itemCount: attendeeEmails.length,
-                    //   itemBuilder: (context, index) {
-                    //     return Padding(
-                    //       padding: const EdgeInsets.only(bottom: 8.0),
-                    //       child: Row(
-                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //         children: [
-                    //           Text(
-                    //             attendeeEmails[index].email,
-                    //             style: TextStyle(
-                    //               color: CustomColor.neon_green,
-                    //               fontWeight: FontWeight.w600,
-                    //               fontSize: 16,
-                    //             ),
-                    //           ),
-                    //           IconButton(
-                    //             icon: Icon(Icons.close),
-                    //             onPressed: () {
-                    //               setState(() {
-                    //                 attendeeEmails.removeAt(index);
-                    //               });
-                    //             },
-                    //             color: Colors.red,
-                    //           ),
-                    //         ],
-                    //       ),
-                    //     );
-                    //   },
-                    // ),
-                    // SizedBox(height: 10),
-                    // Row(
-                    //   crossAxisAlignment: CrossAxisAlignment.start,
-                    //   children: [
-                    //     Expanded(
-                    //       child: TextField(
-                    //         enabled: true,
-                    //         cursorColor: CustomColor.sea_blue,
-                    //         focusNode: textFocusNodeAttendee,
-                    //         controller: textControllerAttendee,
-                    //         textCapitalization: TextCapitalization.none,
-                    //         textInputAction: TextInputAction.done,
-                    //         onChanged: (value) {
-                    //           setState(() {
-                    //             currentEmail = value;
-                    //           });
-                    //         },
-                    //         onSubmitted: (value) {
-                    //           textFocusNodeAttendee.unfocus();
-                    //         },
-                    //         style: TextStyle(
-                    //           color: Colors.black87,
-                    //           fontWeight: FontWeight.bold,
-                    //           letterSpacing: 0.5,
-                    //         ),
-                    //         decoration: new InputDecoration(
-                    //           disabledBorder: OutlineInputBorder(
-                    //             borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    //             borderSide: BorderSide(color: Colors.grey, width: 1),
-                    //           ),
-                    //           enabledBorder: OutlineInputBorder(
-                    //             borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    //             borderSide: BorderSide(color: CustomColor.sea_blue, width: 1),
-                    //           ),
-                    //           focusedBorder: OutlineInputBorder(
-                    //             borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    //             borderSide: BorderSide(color: CustomColor.dark_blue, width: 2),
-                    //           ),
-                    //           errorBorder: OutlineInputBorder(
-                    //             borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    //             borderSide: BorderSide(color: Colors.redAccent, width: 2),
-                    //           ),
-                    //           border: OutlineInputBorder(
-                    //             borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    //           ),
-                    //           contentPadding: EdgeInsets.only(
-                    //             left: 16,
-                    //             bottom: 16,
-                    //             top: 16,
-                    //             right: 16,
-                    //           ),
-                    //           hintText: 'Enter attendee email',
-                    //           hintStyle: TextStyle(
-                    //             color: Colors.grey.withOpacity(0.6),
-                    //             fontWeight: FontWeight.bold,
-                    //             letterSpacing: 0.5,
-                    //           ),
-                    //           errorText: isEditingEmail ? _validateEmail(currentEmail) : null,
-                    //           errorStyle: TextStyle(
-                    //             fontSize: 12,
-                    //             color: Colors.redAccent,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     IconButton(
-                    //       icon: Icon(
-                    //         Icons.check_circle,
-                    //         color: CustomColor.sea_blue,
-                    //         size: 35,
-                    //       ),
-                    //       onPressed: () {
-                    //         setState(() {
-                    //           isEditingEmail = true;
-                    //         });
-                    //         if (_validateEmail(currentEmail) == null) {
-                    //           setState(() {
-                    //             textFocusNodeAttendee.unfocus();
-                    //             calendar.EventAttendee eventAttendee = calendar.EventAttendee();
-                    //             eventAttendee.email = currentEmail;
-                    //
-                    //             attendeeEmails.add(eventAttendee);
-                    //
-                    //             textControllerAttendee.text = '';
-                    //             currentEmail = null;
-                    //             isEditingEmail = false;
-                    //           });
-                    //         }
-                    //       },
-                    //     ),
-                    //   ],
-                    // ),
-                    Visibility(
-                      visible: attendeeEmails.isNotEmpty,
-                      child: Column(
-                        children: [
-                          SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Notify attendees',
-                                style: TextStyle(
-                                  color: CustomColor.dark_cyan,
-                                  fontFamily: 'Raleway',
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                              Switch(
-                                value: shouldNofityAttendees,
-                                onChanged: (value) {
-                                  setState(() {
-                                    shouldNofityAttendees = value;
-                                  });
-                                },
-                                activeColor: CustomColor.sea_blue,
-                              ),
-                            ],
+                    RichText(
+                      text: TextSpan(
+                        text: 'Attendees',
+                        style: TextStyle(
+                          color: CustomColor.dark_cyan,
+                          fontFamily: 'Raleway',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: ' ',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 28,
+                            ),
                           ),
                         ],
                       ),
                     ),
+                     SizedBox(height: 10),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: PageScrollPhysics(),
+                      itemCount: attendeeEmails.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                attendeeEmails[index].email,
+                                style: TextStyle(
+                                  color: CustomColor.neon_green,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.close),
+                                onPressed: () {
+                                  setState(() {
+                                    attendeeEmails.removeAt(index);
+                                  });
+                                },
+                                color: Colors.red,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            enabled: true,
+                            cursorColor: CustomColor.sea_blue,
+                            focusNode: textFocusNodeAttendee,
+                            controller: textControllerAttendee,
+                            textCapitalization: TextCapitalization.none,
+                            textInputAction: TextInputAction.done,
+                            onChanged: (value) {
+                              setState(() {
+                                currentEmail = value;
+                              });
+                            },
+                            onSubmitted: (value) {
+                              textFocusNodeAttendee.unfocus();
+                            },
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.5,
+                            ),
+                            decoration: new InputDecoration(
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                borderSide: BorderSide(color: Colors.grey, width: 1),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                borderSide: BorderSide(color: CustomColor.sea_blue, width: 1),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                borderSide: BorderSide(color: CustomColor.dark_blue, width: 2),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                borderSide: BorderSide(color: Colors.redAccent, width: 2),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                              ),
+                              contentPadding: EdgeInsets.only(
+                                left: 16,
+                                bottom: 16,
+                                top: 16,
+                                right: 16,
+                              ),
+                              hintText: 'Enter attendee email',
+                              hintStyle: TextStyle(
+                                color: Colors.grey.withOpacity(0.6),
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 0.5,
+                              ),
+                              errorText: isEditingEmail ? _validateEmail(currentEmail) : null,
+                              errorStyle: TextStyle(
+                                fontSize: 12,
+                                color: Colors.redAccent,
+                              ),
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.check_circle,
+                            color: CustomColor.sea_blue,
+                            size: 35,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isEditingEmail = true;
+                            });
+                            if (_validateEmail(currentEmail) == null) {
+                              setState(() {
+                                textFocusNodeAttendee.unfocus();
+                                calendar.EventAttendee eventAttendee = calendar.EventAttendee();
+                                eventAttendee.email = currentEmail;
+
+                                attendeeEmails.add(eventAttendee);
+
+                                textControllerAttendee.text = '';
+                                currentEmail = null;
+                                isEditingEmail = false;
+                              });
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                    // Visibility(
+                    //   visible: attendeeEmails.isNotEmpty,
+                    //   child: Column(
+                    //     children: [
+                    //       SizedBox(height: 10),
+                    //       Row(
+                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //         children: [
+                    //           Text(
+                    //             'Notify attendees',
+                    //             style: TextStyle(
+                    //               color: CustomColor.dark_cyan,
+                    //               fontFamily: 'Raleway',
+                    //               fontSize: 20,
+                    //               fontWeight: FontWeight.bold,
+                    //               letterSpacing: 0.5,
+                    //             ),
+                    //           ),
+                    //           Switch(
+                    //             value: shouldNofityAttendees,
+                    //             onChanged: (value) {
+                    //               setState(() {
+                    //                 shouldNofityAttendees = value;
+                    //               });
+                    //             },
+                    //             activeColor: CustomColor.sea_blue,
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     SizedBox(height: 30),
                     Container(
                       width: double.maxFinite,
@@ -980,7 +980,7 @@ class _EditScreenState extends State<EditScreen> {
                                               title: currentTitle,
                                               description: currentDesc ?? '',
                                              // location: currentLocation,
-                                            //  attendeeEmailList: attendeeEmails,
+                                             // attendeeEmailList: attendeeEmails,
                                               shouldNotifyAttendees: shouldNofityAttendees,
                                               hasConferenceSupport: hasConferenceSupport,
                                               startTime: DateTime.fromMillisecondsSinceEpoch(startTimeInEpoch),
