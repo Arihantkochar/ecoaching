@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mymasterje/adminscreens/Password.dart';
+import 'package:mymasterje/parentscreens/ParentHome.dart';
 import 'package:mymasterje/screens/ChooseProfession.dart';
 import 'package:mymasterje/studentscreens/StudentForm.dart';
+import 'package:mymasterje/studentscreens/StudentHome.dart';
 import 'package:mymasterje/studentscreens/StudentProfile.dart';
+import 'package:mymasterje/techerscreens/TeacherHome.dart';
 import 'package:mymasterje/techerscreens/TeacherProfile.dart';
 import 'package:mymasterje/utils/LoginBackground.dart';
 import 'package:mymasterje/utils/UnderDevelopment.dart';
@@ -41,11 +44,11 @@ class _OTPState extends State<OTP> {
       } else {
         if (value.data()['role'] == 'student')
           Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => StudentProfile()));
+              MaterialPageRoute(builder: (context) => StudentHome()));
         if (value.data()['role'] == 'teacher')
           Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => TeacherProfile()
+              MaterialPageRoute(builder: (context) => TeacherHome()
                   //TODO
 
                   ));
@@ -53,6 +56,13 @@ class _OTPState extends State<OTP> {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => Password()
+                //TODO
+
+              ));
+        if (value.data()['role'] == 'parent')
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => ParentHome()
                 //TODO
 
               ));

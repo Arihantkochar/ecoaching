@@ -8,8 +8,9 @@ import '../view.dart';
 
 class SelectTeacherScreen extends StatefulWidget {
   List <String>selectedmember ;
+  List <String>uid;
 
-  SelectTeacherScreen(this.selectedmember);
+  SelectTeacherScreen(this.selectedmember,this.uid);
 
   @override
   _SelectTeacherScreenState createState() => _SelectTeacherScreenState();
@@ -111,6 +112,7 @@ class _SelectTeacherScreenState extends State<SelectTeacherScreen> {
                                     // value: _checkboxListTile,
                                     value: _checkboxList[i],
                                     onChanged: (value) {
+                                      widget.uid.add(snapshot.data.docs[i].id);
                                       widget.selectedmember.add(snapshot.data.docs[i]['email']);
                                       print("Email in teacher screen ${widget.selectedmember}");
                                       setState(() {
@@ -162,7 +164,7 @@ class _SelectTeacherScreenState extends State<SelectTeacherScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      CreateScreen(widget.selectedmember)));
+                                      CreateScreen(widget.selectedmember,widget.uid)));
                         },
                         text: "Next",
                       ),

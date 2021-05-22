@@ -1,10 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:mymasterje/styles/common.dart';
 import 'package:mymasterje/techerscreens/TeacherHome.dart';
 import 'package:mymasterje/widgets/Button.dart';
 import 'package:mymasterje/widgets/FormTextField.dart';
+import 'dart:io' as io;
+import 'package:file_picker/file_picker.dart';
+
 
 class TeacherForm extends StatefulWidget {
   @override
@@ -16,7 +20,10 @@ class _TeacherFormState extends State<TeacherForm> {
   TextEditingController qualification = TextEditingController();
   TextEditingController alternatemobile = TextEditingController();
   TextEditingController email = TextEditingController();
+  TextEditingController experiance = TextEditingController();
   final firestoreInstance = FirebaseFirestore.instance;
+  io.File file;
+  UploadTask task;
 
   String grade, subject1, subject2, subject3;
 
@@ -31,7 +38,11 @@ class _TeacherFormState extends State<TeacherForm> {
               height: screenHeight(context, dividedBy: 10),
             ),
             Text(
-              "Please fill the given form to proceed...",
+              "REGISTRATION FORM",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "PLEASE FILL THE GIVEN FORM TO PROCEED.",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(
@@ -39,8 +50,9 @@ class _TeacherFormState extends State<TeacherForm> {
             ),
             FormTextField(name, "Name"),
             FormTextField(qualification, "Qualification"),
+            FormTextField(experiance, "Work Experience"),
             FormTextField(alternatemobile, "Alternate Mobile No."),
-            FormTextField(email, "Email"),
+            FormTextField(email, "Email ID"),
             Padding(
               padding: const EdgeInsets.all(18.0),
               child: Container(
@@ -204,7 +216,36 @@ class _TeacherFormState extends State<TeacherForm> {
                   ),
                 ),
               ),
+            ), SizedBox(
+              height: screenHeight(context, dividedBy: 38),
             ),
+            Button(text: "Upload Resume",onpressed: () async{
+              try {
+                FilePickerResult result = await FilePicker.platform.pickFiles(allowMultiple: false);
+                if(result != null) {
+                  final path  = result.files.single.path;
+                  setState(() {
+                    file = io.File(path);
+                  });
+                  final ref = FirebaseStorage.instance.ref("resume/${name.text}");
+                  task =  ref.putFile(file);
+
+                } else {
+                  // User canceled the picker
+                  Navigator.pop(context);
+                }
+                // File file = await FilePicker.(type: FileType.custom);
+                // String filename = title.text + '.pdf';
+                // var url = await savePdf(file.readAsBytesSync(), filename);
+                //print(url);
+                //return url;
+              } catch (e) {
+                print(e.toString());
+              }
+
+            },),
+            SizedBox(height: 5,),
+            Text("Please wait for a while when your resume is Uploading..."),
             SizedBox(
               height: screenHeight(context, dividedBy: 38),
             ),
@@ -226,7 +267,9 @@ class _TeacherFormState extends State<TeacherForm> {
                   "subject2": subject2,
                   "subject3": subject3,
                   "grade": grade,
-                  "role": "teacher"
+                  "role": "teacher",
+                  "experience":experiance.text,
+                  "meetlink":null
                 }, SetOptions(merge: true)); /**/
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => TeacherHome()));

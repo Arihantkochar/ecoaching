@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 Size screenSize(BuildContext context) {
-  return MediaQuery.of(context).size;
+  return MediaQuery
+      .of(context)
+      .size;
 }
 
 double screenHeight(BuildContext context, {double dividedBy = 1}) {
@@ -39,4 +41,28 @@ List<String> subject = [
   'History',
   'Civics',
   'Geography'
+];
+List<String> syllabus = ["CBSE", "ICSC", "State Board", "IGCSE", "IB"];
+List<String> state = [
+  "Delhi",
+  "Haryana",
+  "Punjab",
+  "Uttarakhand",
+  "Jammu and Kashmir",
+  "Himachal Pradesh",
+  "Uttar Pradesh",
+  "Andhra Pradesh",
+  "Karnataka",
+  "Kerala",
+  "Tamil Nadu",
+  "Telangana",
+  "west Bengal",
+  "Odisha",
+  "Jharkhand",
+  "Bihar",
+  "Sikkim",
+  "Chattisgarh",
+  "Goa",
+  "Gujrat",
+  "Maharashtra"
 ];

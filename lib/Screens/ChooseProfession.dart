@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mymasterje/adminscreens/Password.dart';
+import 'package:mymasterje/college/CollegeForm.dart';
+import 'package:mymasterje/parentscreens/ParentForm.dart';
 import 'package:mymasterje/studentscreens/StudentForm.dart';
 import 'package:mymasterje/techerscreens/TeacherForm.dart';
 import 'package:mymasterje/utils/LoginBackground.dart';
@@ -47,7 +49,7 @@ class ChooseProfession extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Are You A?",
+                            "Are you a:",
                             style: TextStyle(color: Colors.black, fontSize: 45),
                           ),
                           Row(
@@ -66,7 +68,7 @@ class ChooseProfession extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            UnderDevelopment()));
+                                            Parentform()));
                               })
                             ],
                           ),
@@ -104,18 +106,32 @@ class ChooseProfession extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Image.asset(
-                                  "assets/images/school.png",
-                                  scale: 5,
+                              InkWell(
+                                onTap: (){
+                                  //TODO
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(0.0),
+                                  child: Image.asset(
+                                    "assets/images/school button.png",
+                                    scale: 3.5,
+                                  ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Image.asset(
-                                  "assets/images/college.png",
-                                  scale: 5,
+                              SizedBox(width: screenWidth(context,dividedBy: 12),),
+                              InkWell(
+                                onTap: (){
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => CollegeForm()));
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(0.0),
+                                  child: Image.asset(
+                                    "assets/images/college button.png",
+                                    scale: 3.5,
+                                  ),
                                 ),
                               ),
                             ],

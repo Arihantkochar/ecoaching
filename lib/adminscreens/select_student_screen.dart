@@ -17,6 +17,7 @@ class _SelectStudentScreenState extends State<SelectStudentScreen> {
   //List _checkboxList = List.generate(100, (index) => false);
   List _checkboxList = [];
   List <String>selectedmember =[];
+  List <String>uid = [];
   TextEditingController _searchController = TextEditingController();
 
   String name = "";
@@ -108,6 +109,7 @@ class _SelectStudentScreenState extends State<SelectStudentScreen> {
                                                  //value: _checkboxListTile,
                                                 value: _checkboxList[i],
                                                 onChanged: (value) {
+                                                  uid.add(snapshot.data.docs[i].id);
                                                   selectedmember.add(snapshot.data.docs[i]['email']);
                                                   print("Emails........$selectedmember");
                                                   print("hiiiiiiiiii ${snapshot.data.docs[i].id}");
@@ -164,7 +166,7 @@ class _SelectStudentScreenState extends State<SelectStudentScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            SelectTeacherScreen(selectedmember)));
+                                            SelectTeacherScreen(selectedmember,uid)));
                               },
                               text: "Next",
                             ),

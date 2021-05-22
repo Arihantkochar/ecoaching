@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mymasterje/adminscreens/AdminHome.dart';
 import 'package:mymasterje/screens/Splash.dart';
 import 'package:mymasterje/utils/LoginBackground.dart';
 import 'package:mymasterje/utils/UnderDevelopment.dart';
@@ -88,7 +89,7 @@ class _PasswordState extends State<Password> {
                             },SetOptions(merge: true));
                             Navigator.pushReplacement(
                                 context, MaterialPageRoute(builder: (context) =>
-                                UnderDevelopment()));
+                                AdminHome()));
                           }
                           else{
                             Navigator.pushReplacement(

@@ -2,13 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mymasterje/adminscreens/Password.dart';
+import 'package:mymasterje/parentscreens/ParentHome.dart';
 import 'package:mymasterje/screens/ChooseProfession.dart';
 import 'package:mymasterje/screens/Home.dart';
 import 'package:mymasterje/screens/Loading.dart';
 import 'package:mymasterje/screens/OTP.dart';
 import 'package:mymasterje/studentscreens/StudentForm.dart';
+import 'package:mymasterje/studentscreens/StudentHome.dart';
 import 'package:mymasterje/studentscreens/StudentProfile.dart';
 import 'package:mymasterje/techerscreens/TeacherForm.dart';
+import 'package:mymasterje/techerscreens/TeacherHome.dart';
 import 'package:mymasterje/techerscreens/TeacherProfile.dart';
 import 'package:mymasterje/utils/UnderDevelopment.dart';
 import 'package:mymasterje/widgets/LoginTextField.dart';
@@ -41,7 +44,7 @@ class _LoginState extends State<Login> {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    StudentProfile()
+                    StudentHome()
             //TODO
 
             ));
@@ -50,7 +53,7 @@ class _LoginState extends State<Login> {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      TeacherProfile()
+                      TeacherHome()
                 //TODO
 
               ));
@@ -58,6 +61,13 @@ class _LoginState extends State<Login> {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => Password()
+                //TODO
+
+              ));
+        if (value.data()['role'] == 'parent')
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => ParentHome()
                 //TODO
 
               ));

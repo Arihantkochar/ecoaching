@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mymasterje/adminscreens/AdminHome.dart';
+import 'package:mymasterje/parentscreens/ParentHome.dart';
 import 'package:mymasterje/screens/ChooseProfession.dart';
 import 'package:mymasterje/screens/LoginScreen.dart';
 import 'package:mymasterje/studentscreens/StudentHome.dart';
@@ -48,6 +49,18 @@ class _SplashScreenState extends State<SplashScreen> {
               MaterialPageRoute(
                 builder: (context) => AdminHome(),
               ));
+        else if(value.data()['role'] == "parent")
+           Navigator.pushReplacement(
+               context,
+               MaterialPageRoute(
+                 builder: (context) => ParentHome(),
+               ));
+        else if(value.data()['role'] == null)
+           Navigator.pushReplacement(
+               context,
+               MaterialPageRoute(
+                 builder: (context) => LoginScreen(),
+               ));
         });
       });
     });

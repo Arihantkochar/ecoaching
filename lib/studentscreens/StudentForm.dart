@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mymasterje/studentscreens/StudentHome.dart';
 import 'package:mymasterje/studentscreens/StudentProfile.dart';
 import 'package:mymasterje/styles/common.dart';
 import 'package:mymasterje/widgets/Button.dart';
@@ -90,7 +91,11 @@ class _StudentFormState extends State<StudentForm> {
               height: screenHeight(context, dividedBy: 10),
             ),
             Text(
-              "Please fill the given form to proceed...",
+              "REGISTRATION FORM",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "PLEASE FILL THE GIVEN FORM TO PROCEED.",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(
@@ -99,8 +104,8 @@ class _StudentFormState extends State<StudentForm> {
             FormTextField(name, "Name"),
             FormTextField(fname, "Father's Name"),
             FormTextField(mname, "Mother's Name"),
-            FormTextField(email, "Email"),
-            FormTextField(school, "School"),
+            FormTextField(email, "Email ID"),
+            FormTextField(school, "School Name"),
             FormTextField(alternatemobile, "Alternate Mobile No."),
             Padding(
               padding: const EdgeInsets.all(18.0),
@@ -376,12 +381,13 @@ class _StudentFormState extends State<StudentForm> {
                     "time1": time1,
                     "time2": time2,
                     "grade": grade,
-                    "role": "student"
+                    "role": "student",
+                    "meetlink":null
                   },SetOptions(merge: true));
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => StudentProfile()));
+                          builder: (context) => StudentHome()));
                 },
               ),
             SizedBox(

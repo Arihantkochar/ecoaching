@@ -1,28 +1,26 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:mymasterje/screens/Loading.dart';
+import 'package:flutter/material.dart';
 import 'package:mymasterje/screens/pdfview.dart';
 import 'package:mymasterje/styles/themes.dart';
-import 'package:dio/dio.dart';
-import 'package:path_provider/path_provider.dart';
 
-class Notes extends StatefulWidget {
+import 'Loading.dart';
+
+class Results extends StatefulWidget {
   @override
-  _NotesState createState() => _NotesState();
+  _ResultsState createState() => _ResultsState();
 }
 
-class _NotesState extends State<Notes> {
+class _ResultsState extends State<Results> {
   var firestoreInstance = FirebaseFirestore.instance;
   int i;
-  var dio = Dio();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Notes"),
+          title: Text("Results"),
         ),
         body: StreamBuilder(
-            stream: firestoreInstance.collection('pdf').snapshots(),
+            stream: firestoreInstance.collection('results').snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData)
                 return Loading();
@@ -52,15 +50,15 @@ class _NotesState extends State<Notes> {
                               subtitle: Text("Uploaded by:" +
                                   snapshot.data.docs[i]['name']),
                               trailing:
-                                  InkWell(onTap: (){
-                                    //TODO download pdf
-                                    // Directory appDocDirectory = await getApplicationDocumentsDirectory();
-                                    // Directory(appDocDirectory.path+'/'+'dir').create(recursive: true)
-                                    //     .then((Directory directory) async {
-                                    //   await dio.download(snapshot.data.docs[i]['link'], directory.path);
-                                    // });
-                                  },
-                                      child: Icon(Icons.download_rounded))),
+                              InkWell(onTap: (){
+                                //TODO download pdf
+                                // Directory appDocDirectory = await getApplicationDocumentsDirectory();
+                                // Directory(appDocDirectory.path+'/'+'dir').create(recursive: true)
+                                //     .then((Directory directory) async {
+                                //   await dio.download(snapshot.data.docs[i]['link'], directory.path);
+                                // });
+                              },
+                                  child: Icon(Icons.download_rounded))),
                         ),
                       SizedBox(
                         height: 10,

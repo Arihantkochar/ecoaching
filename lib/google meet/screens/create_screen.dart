@@ -10,8 +10,9 @@ import '../storage.dart';
 
 class CreateScreen extends StatefulWidget {
   List atendees;
+  List uid;
 
-  CreateScreen(this.atendees);
+  CreateScreen(this.atendees,this.uid);
 
   @override
   _CreateScreenState createState() => _CreateScreenState();
@@ -213,16 +214,16 @@ class _CreateScreenState extends State<CreateScreen> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    Text(
-                      'You will have access to modify or remove the event afterwards.',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontFamily: 'Raleway',
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
+                    // Text(
+                    //   'You will have access to modify or remove the event afterwards.',
+                    //   style: TextStyle(
+                    //     color: Colors.grey,
+                    //     fontFamily: 'Raleway',
+                    //     fontSize: 16,
+                    //     fontWeight: FontWeight.bold,
+                    //     letterSpacing: 0.5,
+                    //   ),
+                    // ),
                     SizedBox(height: 16.0),
                     RichText(
                       text: TextSpan(
@@ -982,7 +983,6 @@ class _CreateScreenState extends State<CreateScreen> {
                               calendar.EventAttendee();
                               eventAttendee.email = widget.atendees[i];
                               attendeeEmails.add(eventAttendee);
-                              //attendeeEmails.add(widget.atendees[i]);
                             }
 
                             if (endTimeInEpoch - startTimeInEpoch > 0) {
@@ -1027,10 +1027,10 @@ class _CreateScreenState extends State<CreateScreen> {
                                     startTimeInEpoch: startTimeInEpoch,
                                     endTimeInEpoch: endTimeInEpoch,
                                   );
-                                  for (int i = 0; i < emails.length; i++) {
+                                  for (int i = 0; i < widget.uid.length; i++) {
                                     //String k = getdocid(emails[i]);
                                     FirebaseFirestore.instance.collection(
-                                        'users').doc(getdocid(emails[i])).set({
+                                        'users').doc(widget.uid[i]).set({
                                       "meetlink":eventLink
                                     },SetOptions(merge: true));
                                   }
