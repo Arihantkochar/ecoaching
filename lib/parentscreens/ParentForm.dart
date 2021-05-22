@@ -17,7 +17,7 @@ class _ParentformState extends State<Parentform> {
   TextEditingController residentialadress = TextEditingController();
   TextEditingController alternatemobile = TextEditingController();
   TextEditingController email = TextEditingController();
-  String relation;
+  String relation,states;
   final firestoreInstance = FirebaseFirestore.instance;
   List <String> relationship = ["Father","Mother","Guardian","Sibling"];
   Widget dropdownform(String _value, List<String> list, String text) {
@@ -128,6 +128,47 @@ class _ParentformState extends State<Parentform> {
                 ),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Container(
+                width: screenHeight(context, dividedBy: 1.5),
+                height: 60,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(25))),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    focusColor: Colors.white,
+                    value: states,
+                    //elevation: 5,
+                    style: TextStyle(color: Colors.white),
+                    iconEnabledColor: Colors.black,
+                    items:
+                    (state).map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      );
+                    }).toList(),
+                    hint: Text(
+                      "  " + "State",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    onChanged: (String value) {
+                      setState(() {
+                        states = value;
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ),
             SizedBox(
               height: screenHeight(context, dividedBy: 38),
             ),
@@ -146,6 +187,7 @@ class _ParentformState extends State<Parentform> {
                     "contactno": firebaseUser.phoneNumber,
                     "email": email.text,
                     "relation":relation,
+                    "state":states,
                     "role": "parent"
                   },SetOptions(merge: true));
                   Navigator.pushReplacement(

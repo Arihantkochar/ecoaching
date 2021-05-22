@@ -1,39 +1,29 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:googleapis_auth/auth_io.dart';
-import 'package:mymasterje/google%20meet/calendar_client.dart';
 import 'package:mymasterje/screens/Complaints.dart';
 import 'package:mymasterje/screens/DoubtForums.dart';
-import 'package:mymasterje/screens/Notes.dart';
+import 'package:mymasterje/screens/SchoolList.dart';
 import 'package:mymasterje/screens/SocialMedia.dart';
 import 'package:mymasterje/screens/Splash.dart';
-import 'package:mymasterje/studentscreens/StudentProfile.dart';
-import 'package:mymasterje/view.dart';
-import 'package:googleapis/calendar/v3.dart' as cal;
-import 'package:url_launcher/url_launcher.dart';
-import '../secret.dart';
+import 'package:mymasterje/utils/UnderDevelopment.dart';
+import 'package:mymasterje/widgets/Button.dart';
 
-class AdminHome extends StatefulWidget {
+
+class SchoolHome extends StatefulWidget {
   @override
-  _AdminHomeState createState() => _AdminHomeState();
+  _SchoolHomeState createState() => _SchoolHomeState();
 }
 
-class _AdminHomeState extends State<AdminHome> {
+class _SchoolHomeState extends State<SchoolHome> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  void prompt(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
+  final firestoreInstance = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("MY MASTERJE"),
-      ),
-      drawer:Drawer(
+      appBar: AppBar(title: Text("MY MASTERJE"),),
+      drawer: Drawer(
         child: ListView(
           children: [
             SizedBox(height: 20,),
@@ -45,33 +35,33 @@ class _AdminHomeState extends State<AdminHome> {
             //   trailing: Icon(Icons.person,color: Theme.of(context).primaryColorLight,),
             //   onTap: () {
             //     Navigator.push(context,
-            //         MaterialPageRoute(builder: (context) => StudentProfile()));
+            //         MaterialPageRoute(builder: (context) => UnderDevelopment()));
             //   },
             // ),
-            ListTile(
-              title: Text("E-Library",style: TextStyle(
-                  color: Theme.of(context).primaryColorLight,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),),
-              trailing: Icon(Icons.library_books_sharp,color: Theme.of(context).primaryColorLight,),
-              onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Notes()));
-              },
-            ),
-            ListTile(
-              title: Text("Results",style: TextStyle(
-                  color: Theme.of(context).primaryColorLight,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),),
-              trailing: Icon(Icons.receipt_sharp,color: Theme.of(context).primaryColorLight,),
-              onTap: (){
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => UnderDevelopment()));
-              },
-            ),
+            // ListTile(
+            //   title: Text("E-Library",style: TextStyle(
+            //       color: Theme.of(context).primaryColorLight,
+            //       fontSize: 18,
+            //       fontWeight: FontWeight.bold),),
+            //   trailing: Icon(Icons.library_books_sharp,color: Theme.of(context).primaryColorLight,),
+            //   onTap: () {
+            //     Navigator.push(
+            //         context, MaterialPageRoute(builder: (context) => Notes()));
+            //   },
+            // ),
+            // ListTile(
+            //   title: Text("Results",style: TextStyle(
+            //       color: Theme.of(context).primaryColorLight,
+            //       fontSize: 18,
+            //       fontWeight: FontWeight.bold),),
+            //   trailing: Icon(Icons.receipt_sharp,color: Theme.of(context).primaryColorLight,),
+            //   onTap: (){
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (context) => Results()));
+            //   },
+            // ),
             ListTile(
               title: Text("Test Series",style: TextStyle(
                   color: Theme.of(context).primaryColorLight,
@@ -192,40 +182,17 @@ class _AdminHomeState extends State<AdminHome> {
           ],
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Button(text: "Schedule Meeting",
-              onpressed: () async{
-                var _clientID = new ClientId(Secret.getId(), "");
-                const _scopes = const [cal.CalendarApi.calendarScope];
-                await clientViaUserConsent(_clientID, _scopes, prompt)
-                    .then((AuthClient client) async {
-                  CalendarClient.calendar = cal.CalendarApi(client);
-                });
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SelectStudentScreen()));
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Center(
+            child: Button(text:"School And College List",
+            onpressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>SchoolList()));
             },),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("NOTE:\n\nDear Admin,\n\nKindly follow the following steps before scheduling the class:\n\n"
-                  "i)Verify the payment details with the profile on the database provided on the Google Sheets\n\n"
-                  "ii)Verify the subjects with the student.\n\n"
-                  "iii)Verify the availability of teachers.\n\n"
-                  "iv)Ensure that the student has downloaded the Google Meet and instruct them that they can join the class via the app and also via the link that they have recieved in their Email bu simply clicking on it."
-                  ),
-            ),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Text("-MyMasterje",style: TextStyle(fontWeight: FontWeight.bold),),
-              ),
-            ),
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

@@ -22,7 +22,9 @@ class _ParentHomeState extends State<ParentHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("MY MASTERJE"),
+      ),
       drawer:  Drawer(
         child: ListView(
           children: [
@@ -195,7 +197,19 @@ class _ParentHomeState extends State<ParentHome> {
           Center(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Text("NOTE: \n\nDear Parent,\nWe, the team of MyMasterje are happy to have you on board. Kindly explore the best courses on MyMasterje as shown and enroll for them before the seats fill out and give your children, the best of quality education.ENROLL NOW!"),
+              child: Text("NOTE: \n\nDear Parent,\nWe, the team of MyMasterje are happy to have you on board. Kindly explore the best courses on MyMasterje as shown and enroll for them before the seats fill out and give your children, the best of quality education."),
+            ),
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text("ENROLL NOW!",style: TextStyle(fontWeight: FontWeight.bold),),
+            ),
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Text("Parents can now get a 1 on 1 counseling session scheduled with the administrators and teachers by putting out all the details on the doubt forum in the menu and wait for our admin staff to get back to you."),
             ),
           ),
           Center(

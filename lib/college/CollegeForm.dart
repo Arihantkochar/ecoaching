@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mymasterje/school/SchoolHome.dart';
 import 'package:mymasterje/styles/common.dart';
 import 'package:mymasterje/utils/UnderDevelopment.dart';
 import 'package:mymasterje/widgets/FormTextField.dart';
@@ -139,7 +140,7 @@ class _CollegeFormState extends State<CollegeForm> {
                     .collection("users")
                     .doc(firebaseUser.uid)
                     .set({
-                  "schoolname":schoolname,
+                  "schoolname":schoolname.text,
                   "name": name.text,
                   "alternatemobile": acontactno.text,
                   "contactno": firebaseUser.phoneNumber,
@@ -147,10 +148,11 @@ class _CollegeFormState extends State<CollegeForm> {
                  "relationwithschool":relation,
                   "syllabus": syllabus1,
                   "meetlink":null,
-                  "role":"college"
+                  "role":"college",
+                  "address":address.text
                 }, SetOptions(merge: true)); /**/
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => UnderDevelopment()));
+                    MaterialPageRoute(builder: (context) => SchoolHome()));
               },
             ),
             SizedBox(

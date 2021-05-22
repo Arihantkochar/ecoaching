@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mymasterje/adminscreens/Password.dart';
 import 'package:mymasterje/college/CollegeForm.dart';
 import 'package:mymasterje/parentscreens/ParentForm.dart';
+import 'package:mymasterje/school/SchoolForm.dart';
 import 'package:mymasterje/studentscreens/StudentForm.dart';
 import 'package:mymasterje/techerscreens/TeacherForm.dart';
 import 'package:mymasterje/utils/LoginBackground.dart';
@@ -108,6 +109,10 @@ class ChooseProfession extends StatelessWidget {
                             children: [
                               InkWell(
                                 onTap: (){
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SchoolForm()));
                                   //TODO
                                 },
                                 child: Padding(

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mymasterje/screens/Loading.dart';
 import 'package:mymasterje/styles/common.dart';
+import 'package:mymasterje/techerscreens/TeacherHome.dart';
 import 'package:mymasterje/widgets/Button.dart';
 
 class TeacherProfile extends StatefulWidget {
@@ -172,6 +173,7 @@ class _TeacherProfileState extends State<TeacherProfile> {
                                               "subject3": subject3.text == ""?snapshot.data['subject3']:subject3.text,
                                             }).then((_) {
                                               print("success!");
+                                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>TeacherHome()));
                                             });
                                           },
                                         ),

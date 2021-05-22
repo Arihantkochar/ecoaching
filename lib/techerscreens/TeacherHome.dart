@@ -29,7 +29,9 @@ class _TeacherHomeState extends State<TeacherHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("MY MASTERJE"),
+      ),
       drawer: Drawer(
         child: ListView(
           children: [
@@ -42,7 +44,7 @@ class _TeacherHomeState extends State<TeacherHome> {
               trailing: Icon(Icons.person,color: Theme.of(context).primaryColorLight,),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => StudentProfile()));
+                    MaterialPageRoute(builder: (context) => TeacherProfile()));
               },
             ),
             ListTile(

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mymasterje/adminscreens/Password.dart';
 import 'package:mymasterje/parentscreens/ParentHome.dart';
+import 'package:mymasterje/school/SchoolHome.dart';
 import 'package:mymasterje/screens/ChooseProfession.dart';
 import 'package:mymasterje/studentscreens/StudentForm.dart';
 import 'package:mymasterje/studentscreens/StudentHome.dart';
@@ -65,6 +66,12 @@ class _OTPState extends State<OTP> {
               MaterialPageRoute(builder: (context) => ParentHome()
                 //TODO
 
+              ));
+        if(value.data()['role'] == 'college' || value.data()['role'] == 'school')
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SchoolHome(),
               ));
       }
     });
